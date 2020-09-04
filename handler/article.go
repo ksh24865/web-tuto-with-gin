@@ -33,12 +33,10 @@ func GetArticle(c *gin.Context) {
 			render(c, gin.H{
 				"title":   article.Title,
 				"payload": article}, "article.html")
-
 		} else {
 			// If the article is not found, abort with an error
 			c.AbortWithError(http.StatusNotFound, err)
 		}
-
 	} else {
 		// If an invalid article ID is specified in the URL, abort with an error
 		c.AbortWithStatus(http.StatusNotFound)
@@ -50,13 +48,26 @@ func CreateArticle(c *gin.Context) {
 	title := c.PostForm("title")
 	content := c.PostForm("content")
 
-	if a, err := model.CreateNewArticle(title, content); err == nil {
-		// If the article is created successfully, show success message
-		render(c, gin.H{
-			"title":   "Submission Successful",
-			"payload": a}, "submission-successful.html")
+	if _, err := model.CreateNewArticle(title, content); err == nil {
+		// If the article is created successfully, redirect to home page
+		c.Redirect(http.StatusMovedPermanently, "/")
 	} else {
 		// if there was an error while creating the article, abort with an error
 		c.AbortWithStatus(http.StatusBadRequest)
+	}
+}
+
+func DeleteArticle(c *gin.Context) {
+	// Check if the article ID is valid
+	if articleID, err := strconv.Atoi(c.Param("article_id")); err == nil {
+		if err := model.DeleteArticleByID(articleID); err == nil {
+			// If the article is deleted successfully, redirect to home page
+			c.Redirect(http.StatusMovedPermanently, "/")
+		} else {
+			// if there was an error while deleting the article, abort with an error
+			c.AbortWithError(http.StatusNotFound, err)
+		}
+	} else {
+		c.AbortWithStatus(http.StatusNotFound)
 	}
 }

@@ -1,20 +1,24 @@
 package main
 
 import (
-	"github.com/KumKeeHyun/web-tuto-with-gin/dataservice/memory"
-	"github.com/KumKeeHyun/web-tuto-with-gin/handler"
+	"github.com/KumKeeHyun/web-tuto-with-gin/dataservice/mysql"
+	"github.com/KumKeeHyun/web-tuto-with-gin/rest"
 	"github.com/KumKeeHyun/web-tuto-with-gin/usecase/manageArticle"
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
+	mysql.Setup()
+
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.LoadHTMLGlob("view/*")
 
-	ar := memory.NewArticleRepo()
+	//ar := memory.NewArticleRepo()
+	ar := mysql.NewArticleRepo()
 	mauc := manageArticle.NewManageArticleUsecase(ar)
-	h := handler.NewGinHandler(mauc)
+	h := rest.NewGinHandler(mauc)
 
 	r.GET("/", h.ShowIndexPage)
 	article := r.Group("/article")

@@ -1,8 +1,6 @@
 package mysql
 
 import (
-	"time"
-
 	"github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
 	"github.com/jinzhu/gorm"
 )
@@ -17,12 +15,8 @@ func NewArticleRepo() *articleRepo {
 	}
 }
 
-func (ar *articleRepo) GetAll() (al []model.Article) {
-	err := ar.db.Find(&al).Error
-	if err != nil {
-		return []model.Article{}
-	}
-	return
+func (ar *articleRepo) GetAll() (al []model.Article, err error) {
+	return al, ar.db.Find(&al).Error
 }
 
 func (ar *articleRepo) GetByID(id int) (a *model.Article, err error) {
@@ -30,18 +24,10 @@ func (ar *articleRepo) GetByID(id int) (a *model.Article, err error) {
 	return a, ar.db.Where("id=?", id).First(a).Error
 }
 
-func (ar *articleRepo) Create(title, content string) (a *model.Article, err error) {
-	a = &model.Article{
-		Title: title, Content: content,
-		CreatedAt: time.Now(),
-	}
-
-	return a, ar.db.Create(a).Error
+func (ar *articleRepo) Create(article *model.Article) (*model.Article, error) {
+	return article, ar.db.Create(article).Error
 }
 
-func (ar *articleRepo) DeleteByID(id int) error {
-	a := model.Article{
-		ID: id,
-	}
-	return ar.db.Delete(&a).Error
+func (ar *articleRepo) Delete(article *model.Article) error {
+	return ar.db.Delete(article).Error
 }

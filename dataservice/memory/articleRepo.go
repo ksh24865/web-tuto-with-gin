@@ -3,7 +3,6 @@ package memory
 import (
 	"errors"
 	"sync"
-	"time"
 
 	"github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
 )
@@ -22,11 +21,11 @@ func NewArticleRepo() *articleRepo {
 	}
 }
 
-func (ar *articleRepo) GetAll() []model.Article {
+func (ar *articleRepo) GetAll() ([]model.Article, error) {
 	ar.mu.Lock()
 	defer ar.mu.Unlock()
 
-	return ar.articleList
+	return ar.articleList, nil
 }
 
 func (ar *articleRepo) GetByID(id int) (*model.Article, error) {
@@ -41,28 +40,24 @@ func (ar *articleRepo) GetByID(id int) (*model.Article, error) {
 	return nil, errors.New("Article not found")
 }
 
-func (ar *articleRepo) Create(title, content string) (*model.Article, error) {
+func (ar *articleRepo) Create(article *model.Article) (*model.Article, error) {
 	ar.mu.Lock()
 	defer ar.mu.Unlock()
 
-	a := model.Article{
-		ID:    ar.id,
-		Title: title, Content: content,
-		CreatedAt: time.Now(),
-	}
+	article.ID = ar.id
 	ar.id++
 
-	ar.articleList = append(ar.articleList, a)
+	ar.articleList = append(ar.articleList, *article)
 
-	return &a, nil
+	return article, nil
 }
 
-func (ar *articleRepo) DeleteByID(id int) error {
+func (ar *articleRepo) Delete(article *model.Article) error {
 	ar.mu.Lock()
 	defer ar.mu.Unlock()
 
 	for i, a := range ar.articleList {
-		if a.ID == id {
+		if a.ID == article.ID {
 			ar.articleList = append(ar.articleList[:i], ar.articleList[i+1:]...)
 			return nil
 		}

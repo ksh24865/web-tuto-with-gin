@@ -26,7 +26,7 @@ func NewGinHandler(mauc usecase.ManageArticleUsecase) *GinHandler {
 }
 
 func (h *GinHandler) ShowIndexPage(c *gin.Context) {
-	articles := h.mauc.GetAllArticles()
+	articles, _ := h.mauc.GetAllArticles()
 
 	// Call the render function with the name of the template to render
 	render(c, gin.H{

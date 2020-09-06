@@ -8,7 +8,9 @@
         <div class="col-md-8">
             <h1>{{.payload.Title}}</h1>
         </div>   
-        <a href="/article/delete/{{.payload.ID}}" class="btn btn-info" role="button" data-method="delete">Delete</a>
+        {{ if .is_logged_in }}
+        <a href="/article/delete/{{.payload.ID}}" class="btn btn-info" role="button">Delete</a>
+        {{ end }}
     </div>
     <!--Display the title of the article-->
 

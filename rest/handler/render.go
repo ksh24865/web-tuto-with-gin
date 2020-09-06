@@ -1,4 +1,4 @@
-package rest
+package handler
 
 import (
 	"net/http"
@@ -7,6 +7,9 @@ import (
 )
 
 func render(c *gin.Context, data gin.H, templateName string) {
+	loggedInInterface, _ := c.Get("is_logged_in")
+	data["is_logged_in"] = loggedInInterface.(bool)
+
 	switch c.Request.Header.Get("Accept") {
 	case "application/json":
 		// Respond with JSON

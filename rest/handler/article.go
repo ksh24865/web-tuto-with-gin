@@ -1,43 +1,26 @@
-package rest
+package handler
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
-	"github.com/KumKeeHyun/web-tuto-with-gin/usecase"
 	"github.com/gin-gonic/gin"
 )
 
-func catchPanic() {
-	if p := recover(); p != nil {
-		log.Printf("%+v\n", p)
-	}
-}
-
-type GinHandler struct {
-	mauc usecase.ManageArticleUsecase
-}
-
-func NewGinHandler(mauc usecase.ManageArticleUsecase) *GinHandler {
-	return &GinHandler{
-		mauc: mauc,
-	}
-}
-
 func (h *GinHandler) ShowIndexPage(c *gin.Context) {
-	articles := h.mauc.GetAllArticles()
+	articles, err := h.mauc.GetAllArticles()
+	if err != nil {
+		articles = nil
+	}
+
+	// Current articles include 'Writer.Password'.
+	// Since this is information to be hidden in the client, you need to use an adapter,
+	// but it is an example code, so I will skip it.
 
 	// Call the render function with the name of the template to render
 	render(c, gin.H{
 		"title":   "Home Page",
 		"payload": articles}, "index.html")
-}
-
-func (h *GinHandler) ShowArticleCreationPage(c *gin.Context) {
-	// Call the render function with the name of the template to render
-	render(c, gin.H{
-		"title": "Create New Article"}, "create-article.html")
 }
 
 func (h *GinHandler) ShowArticle(c *gin.Context) {
@@ -65,7 +48,10 @@ func (h *GinHandler) NewArticle(c *gin.Context) {
 	title := c.PostForm("title")
 	content := c.PostForm("content")
 
-	if _, err := h.mauc.CreateNewArticle(title, content); err == nil {
+	tempID, _ := c.Get("uid")
+	uid := tempID.(int)
+
+	if _, err := h.mauc.CreateNewArticle(title, content, uid); err == nil {
 		// If the article is created successfully, redirect to home page
 		c.Redirect(http.StatusMovedPermanently, "/")
 	} else {

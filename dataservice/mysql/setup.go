@@ -26,5 +26,7 @@ func Setup() {
 
 	dbConn.AutoMigrate(
 		&model.Article{},
+		&model.User{},
 	)
+	dbConn.Model(&model.Article{}).AddForeignKey("writer_id", "users(id)", "CASCADE", "CASCADE")
 }

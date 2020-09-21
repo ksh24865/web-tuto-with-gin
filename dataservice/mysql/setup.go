@@ -10,7 +10,7 @@ import (
 const (
 	dbms = "mysql"
 	user = "root"
-	pass = "68gkrqjs"
+	pass = "password"
 	db   = "webtuto"
 )
 

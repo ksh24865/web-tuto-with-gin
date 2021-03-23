@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/KumKeeHyun/web-tuto-with-gin/dataservice/mysql"
-	"github.com/KumKeeHyun/web-tuto-with-gin/rest"
-	"github.com/KumKeeHyun/web-tuto-with-gin/usecase/manageArticle"
+	"github.com/web-tuto-with-gin/dataservice/mysql"
+	"github.com/web-tuto-with-gin/rest"
+	"github.com/web-tuto-with-gin/usecase/manageArticle"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )

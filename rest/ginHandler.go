@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/KumKeeHyun/web-tuto-with-gin/usecase"
+	"github.com/web-tuto-with-gin/usecase"
 	"github.com/gin-gonic/gin"
 )
 

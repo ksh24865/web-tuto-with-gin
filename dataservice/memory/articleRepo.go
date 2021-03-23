@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
+	"github.com/web-tuto-with-gin/domain/model"
 )
 
 type articleRepo struct {

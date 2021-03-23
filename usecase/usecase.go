@@ -1,6 +1,6 @@
 package usecase
 
-import "github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
+import "github.com/web-tuto-with-gin/domain/model"
 
 type ManageArticleUsecase interface {
 	GetAllArticles() ([]model.Article, error)

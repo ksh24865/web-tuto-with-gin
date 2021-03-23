@@ -4,8 +4,8 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
-	"github.com/KumKeeHyun/web-tuto-with-gin/domain/repository"
+	"github.com/web-tuto-with-gin/domain/model"
+	"github.com/web-tuto-with-gin/domain/repository"
 )
 
 type registrationUsecase struct {

@@ -1,6 +1,6 @@
 package repository
 
-import "github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
+import "github.com/web-tuto-with-gin/domain/model"
 
 type ArticleRepo interface {
 	GetAll() ([]model.Article, error)

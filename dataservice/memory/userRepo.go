@@ -3,7 +3,7 @@ package memory
 import (
 	"errors"
 
-	"github.com/KumKeeHyun/web-tuto-with-gin/domain/model"
+	"github.com/web-tuto-with-gin/domain/model"
 )
 
 type userRepo struct {

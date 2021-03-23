@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/KumKeeHyun/web-tuto-with-gin/dataservice/memory"
-	"github.com/KumKeeHyun/web-tuto-with-gin/rest/handler"
-	"github.com/KumKeeHyun/web-tuto-with-gin/rest/middleware"
-	"github.com/KumKeeHyun/web-tuto-with-gin/usecase/manageArticle"
-	"github.com/KumKeeHyun/web-tuto-with-gin/usecase/registration"
+	"github.com/web-tuto-with-gin/dataservice/memory"
+	"github.com/web-tuto-with-gin/rest/handler"
+	"github.com/web-tuto-with-gin/rest/middleware"
+	"github.com/web-tuto-with-gin/usecase/manageArticle"
+	"github.com/web-tuto-with-gin/usecase/registration"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"

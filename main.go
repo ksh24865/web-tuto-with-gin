@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/KumKeeHyun/web-tuto-with-gin/handler"
+	"github.com/web-tuto-with-gin/handler"
 	"github.com/gin-gonic/gin"
 )
 
